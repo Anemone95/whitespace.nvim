@@ -1,7 +1,7 @@
 local config = {
   highlight = 'DiffDelete',
   ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help' },
-  ignore_terminal = true,
+  ignored_buffertypes = { 'terminal' },
 }
 
 local whitespace = {}
@@ -11,11 +11,11 @@ whitespace.highlight = function ()
     error(string.format('highlight %s does not exist', config.highlight))
   end
 
-  if config.ignore_terminal and vim.bo.buftype == 'terminal' then
+  if vim.tbl_contains(config.ignored_buffertypes, vim.bo.buftype) then
     return
   end
 
-  if vim.tbl_contains(config.ignored_filetypes, vim.bo.filetype) then
+  if vim.tbl_contains(config.ignored_filetypes, vim.bo.filetye) then
     return
   end
 
